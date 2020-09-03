@@ -8,6 +8,7 @@ import java.util.Date;
 
 import javax.annotation.PostConstruct;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,6 +29,8 @@ import com.amazonaws.services.s3.model.S3Object;
 public class AmazonClient {
 
 	private AmazonS3 s3client;
+	@Autowired
+	private OwnerService ownerService;
 
 	@Value("${amazonProperties.endpointUrl}")
 	private String endpointUrl;
@@ -45,15 +48,18 @@ public class AmazonClient {
 		this.s3client = new AmazonS3Client(credentials);
 	}
 
-	public String uploadFile(MultipartFile multipartFile, String corelationid) throws FileNotFoundException {
+	public String uploadFile(MultipartFile[] multipartFile, String corelationid) throws FileNotFoundException {
 		String imageUrl = "";
-
+    
 		try {
-			File file = convertMultiPartToFile(multipartFile, corelationid);
-			String fileName = generateFileName(multipartFile);
+			for(MultipartFile multipartFiles : multipartFile) {
+			File file = convertMultiPartToFile(multipartFiles, corelationid);
+			String fileName = generateFileName(multipartFiles);
 			imageUrl = endpointUrl + "/" + bucketName + "/" + fileName;
+			ownerService.update(corelationid, imageUrl);
 			uploadFileTos3bucket(fileName, file);
 			file.delete();
+			}
 
 		} catch (Exception e) {
 			e.printStackTrace();

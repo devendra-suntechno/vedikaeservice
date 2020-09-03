@@ -1,7 +1,6 @@
 package com.vedika.functionhall.model;
 
 import java.util.Arrays;
-import java.util.List;
 
 public class FunctionHallUIResponse {
 
@@ -18,29 +17,151 @@ public class FunctionHallUIResponse {
 	private String[] ImageUrl;
 	private String street;
 	private String state;
-	private List<String> amenities;
-	private List<String> eventType;
+	private Boolean parking;
+	private Boolean internet;
+	private Boolean nosmoking;
+	private Boolean airconditioning;
+	private Boolean soundsystem;
+	private Boolean lightingsystem;
+	private Boolean dancefloor;
+	private Boolean noalcohol;
+	private Boolean banquethall;
+	private Boolean partyroom;
+	private Boolean conference;
+	private Boolean performance;
+	private Boolean weddinghall;
+	private Boolean nightclub;
+	private Boolean eventspace;
 
 	private String correlationid;
 
+	public Boolean getBanquethall() {
+		return banquethall;
+	}
+
+	public void setBanquethall(Boolean banquethall) {
+		this.banquethall = banquethall;
+	}
+
+	public Boolean getPartyroom() {
+		return partyroom;
+	}
+
+	public void setPartyroom(Boolean partyroom) {
+		this.partyroom = partyroom;
+	}
+
+	public Boolean getConference() {
+		return conference;
+	}
+
+	public void setConference(Boolean conference) {
+		this.conference = conference;
+	}
+
+
+	public Boolean getPerformance() {
+		return performance;
+	}
+
+	public void setPerformance(Boolean performance) {
+		this.performance = performance;
+	}
+
+	public Boolean getWeddinghall() {
+		return weddinghall;
+	}
+
+	public void setWeddinghall(Boolean weddinghall) {
+		this.weddinghall = weddinghall;
+	}
+
+	public Boolean getNightclub() {
+		return nightclub;
+	}
+
+	public void setNightclub(Boolean nightclub) {
+		this.nightclub = nightclub;
+	}
+
+	public Boolean getEventspace() {
+		return eventspace;
+	}
+
+	public void setEventspace(Boolean eventspace) {
+		this.eventspace = eventspace;
+	}
+
+	public void setNoalocohol(Boolean noalcohol) {
+		this.noalcohol = noalcohol;
+	}
+
+	public Boolean getParking() {
+		return parking;
+	}
+
+	public void setParking(Boolean parking) {
+		this.parking = parking;
+	}
+
+	public Boolean getInternet() {
+		return internet;
+	}
+
+	public void setInternet(Boolean internet) {
+		this.internet = internet;
+	}
+
+	public Boolean getNosmoking() {
+		return nosmoking;
+	}
+
+	public void setNosmoking(Boolean nosmoking) {
+		this.nosmoking = nosmoking;
+	}
+
+	public Boolean getAirconditioning() {
+		return airconditioning;
+	}
+
+	public void setAirconditioning(Boolean airconditioning) {
+		this.airconditioning = airconditioning;
+	}
+
+	public Boolean getSoundsystem() {
+		return soundsystem;
+	}
+
+	public void setSoundsystem(Boolean soundsystem) {
+		this.soundsystem = soundsystem;
+	}
+
+	public Boolean getLightingsystem() {
+		return lightingsystem;
+	}
+
+	public void setLightingsystem(Boolean lightingsystem) {
+		this.lightingsystem = lightingsystem;
+	}
+
+	public Boolean getDancefloor() {
+		return dancefloor;
+	}
+
+	public void setDancefloor(Boolean dancefloor) {
+		this.dancefloor = dancefloor;
+	}
+
+	public Boolean getNoalcohol() {
+		return noalcohol;
+	}
+
+	public void setNoalcohol(Boolean noalcohol) {
+		this.noalcohol = noalcohol;
+	}
+
 	public String getFunctionhalldescription() {
 		return functionhalldescription;
-	}
-
-	public List<String> getAmenities() {
-		return amenities;
-	}
-
-	public void setAmenities(List<String> amenities) {
-		this.amenities = amenities;
-	}
-
-	public List<String> getEventType() {
-		return eventType;
-	}
-
-	public void setEventType(List<String> eventType) {
-		this.eventType = eventType;
 	}
 
 	public void setFunctionhalldescription(String functionhalldescription) {
@@ -185,9 +306,13 @@ public class FunctionHallUIResponse {
 				+ ownerLastName + ", ownerId=" + ownerId + ", functionhalldescription=" + functionhalldescription
 				+ ", functionhalltype=" + functionhalltype + ", foodtype=" + foodtype + ", maximumguest=" + maximumguest
 				+ ", roomtype=" + roomtype + ", ownerContactNumber=" + ownerContactNumber + ", ImageUrl="
-				+ Arrays.toString(ImageUrl) + ", street=" + street + ", state=" + state + ", correlationid="
-				+ correlationid + ", city=" + city + ", zipcode=" + zipcode + ", functionhallContactNumber="
-				+ functionhallContactNumber + "]";
+				+ Arrays.toString(ImageUrl) + ", street=" + street + ", state=" + state + ", parking=" + parking
+				+ ", internet=" + internet + ", nosmoking=" + nosmoking + ", airconditioning=" + airconditioning
+				+ ", soundsystem=" + soundsystem + ", lightingsystem=" + lightingsystem + ", dancefloor=" + dancefloor
+				+ ", noalcohol=" + noalcohol + ", banquethall=" + banquethall + ", partyroom=" + partyroom
+				+ ", conference=" + conference + ", performance=" + performance + ", weddinghall=" + weddinghall + ", nightclub="
+				+ nightclub + ",eventspace=" + eventspace + ", correlationid=" + correlationid + ", city=" + city
+				+ ", zipcode=" + zipcode + ", functionhallContactNumber=" + functionhallContactNumber + "]";
 	}
 
 }

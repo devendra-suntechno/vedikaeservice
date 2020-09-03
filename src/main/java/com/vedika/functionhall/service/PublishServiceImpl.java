@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.vedika.functionhall.model.AccountDetails;
 import com.vedika.functionhall.model.FunctionHall;
-import com.vedika.functionhall.model.Location;
 import com.vedika.functionhall.model.Owner;
 import com.vedika.functionhall.model.PublishDetails;
 import com.vedika.functionhall.repository.PublishRepo;
@@ -22,10 +21,8 @@ public class PublishServiceImpl implements PublishService {
 	public Owner saveOrUpdatepublishListing(PublishDetails publishdetails, Owner owner)
 			throws IllegalArgumentException {
 
-	
 		owner.setOwnerId(publishdetails.getOwnerId());
-		owner.setCorelationId(publishdetails.getCorelationId());
-		Location location = publishdetails.getLocation();
+		com.vedika.functionhall.model.Location location = publishdetails.getLocation();
 		FunctionHall functionhalldata = publishdetails.getDetails();
 		AccountDetails accountdetails = publishdetails.getAccountDetails();
 		List<FunctionHall> functionhalllist = new ArrayList<FunctionHall>();
@@ -46,14 +43,30 @@ public class PublishServiceImpl implements PublishService {
 			functionhall.setRoomtype(functionhalldata.getRoomtype());
 			functionhall.setMaximumguest(functionhalldata.getMaximumguest());
 			functionhall.setImageUrl(functionhalldata.getImageUrl());
-			functionhall.setAmenities(functionhalldata.getAmenities());
-			functionhall.setEventType(functionhalldata.getEventType());
+
+			functionhall.setAirconditioning(functionhalldata.getAirconditioning());
+			functionhall.setDancefloor(functionhalldata.getDancefloor());
+			functionhall.setLightingsystem(functionhalldata.getLightingsystem());
+			functionhall.setInternet(functionhalldata.getInternet());
+			functionhall.setNoalcohol(functionhalldata.getNoalcohol());
+			functionhall.setNosmoking(functionhalldata.getNosmoking());
+			functionhall.setParking(functionhalldata.getParking());
+			functionhall.setSoundsystem(functionhalldata.getSoundsystem());
+
+			functionhall.setEventspace(functionhalldata.getEventspace());
+			functionhall.setWeddinghall(functionhalldata.getWeddinghall());
+			functionhall.setNightclub(functionhalldata.getNightclub());
+			functionhall.setPerformance(functionhalldata.getPerformance());
+			functionhall.setConference(functionhalldata.getConference());
+			functionhall.setPartyroom(functionhalldata.getPartyroom());
+			functionhall.setBanquethall(functionhalldata.getBanquethall());
+
 			accountdata.setAccountName(accountdetails.getAccountName());
 			accountdata.setAccountNumber(accountdetails.getAccountNumber());
 			accountdata.setAccountType(accountdetails.getAccountType());
 			accountdata.setBankName(accountdetails.getBankName());
-			accountdata.setBranchName(accountdetails.getBranchName());
-			accountdata.setIfscCode(accountdetails.getIfscCode());
+			accountdata.setBranch(accountdetails.getBranch());
+			accountdata.setIfsc(accountdetails.getIfsc());
 			accountdata.setPanNumber(accountdetails.getPanNumber());
 			functionhalllist.add(functionhall);
 			accountdetailslist.add(accountdata);
@@ -63,6 +76,10 @@ public class PublishServiceImpl implements PublishService {
 		return publishRepo.save(owner);
 	}
 
+	/*
+	 * @Override public List<PublishDetails> getAllPublishDetails() { // TODO
+	 * Auto-generated method stub return publishRepo.findAll(); }
+	 */
 	/*
 	 * if (publishdetails.getOwnerId() == null ||
 	 * publishdetails.getOwnerId().isEmpty()) {

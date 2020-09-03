@@ -25,10 +25,10 @@ public class PaymentServiceImpl implements PaymentService {
 	private BookingRepo bookingrepo;
 
 	@Override
-	public PaymentDetail proceedPayment(PaymentDetail paymentDetail) {
+	public Payment proceedPayment(Payment paymentDetail) {
 		PaymentUtil paymentUtil = new PaymentUtil();
 		paymentDetail = paymentUtil.populatePaymentDetail(paymentDetail);
-		savePaymentDetail(paymentDetail);
+			//	savePaymentDetail(paymentDetail);
 		return paymentDetail;
 	}
 
@@ -49,6 +49,7 @@ public class PaymentServiceImpl implements PaymentService {
 				payment.setMihpayId(paymentinfo.getMihpayid());
 				payment.setMode(paymentinfo.getMode());
 				bookingslot.setDate(paymentinfo.getDate());
+				bookingslot.setTimeSlot(paymentinfo.getTimeSlot());
 				paymentRepository.save(payment);
 				bookingrepo.save(bookingslot);
 			}
@@ -57,9 +58,10 @@ public class PaymentServiceImpl implements PaymentService {
 		return msg;
 	}
 
-	private void savePaymentDetail(PaymentDetail paymentDetail) {
+	private void savePaymentDetail(Payment paymentDetail) {
 		Payment payment = new Payment();
-		payment.setAmount(Double.parseDouble(paymentDetail.getAmount()));
+		payment.setAmount(paymentDetail.getAmount());
+		payment.setFunctionhallId(paymentDetail.getFunctionhallId());
 		payment.setEmail(paymentDetail.getEmail());
 		payment.setName(paymentDetail.getName());
 		payment.setPaymentDate(new Date());

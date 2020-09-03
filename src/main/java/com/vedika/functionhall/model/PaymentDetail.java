@@ -1,10 +1,20 @@
 package com.vedika.functionhall.model;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
+
 public class PaymentDetail {
 
     private String email;
     private String name;
-    private String phone;
+    private String functionhallId;
+    public String getFunctionhallId() {
+		return functionhallId;
+	}
+	public void setFunctionhallId(String functionhallId) {
+		this.functionhallId = functionhallId;
+	}
+	private String phone;
     private String productInfo;
     private String amount;
     private String txnId;

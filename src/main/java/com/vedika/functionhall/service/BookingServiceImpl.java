@@ -32,7 +32,7 @@ public class BookingServiceImpl implements BookingService {
 
 		for (BookingSlot slot : findAllBookingSlots) {
 
-			if (bookingslot.getDate().equals(slot.getDate()) && bookingslot.getTimeSlot().equals(slot.getTimeSlot())) {
+			if ((bookingslot.getDate().equals(slot.getDate())) &&  (bookingslot.getTimeSlot().equals(slot.getTimeSlot()))) {
 				return Boolean.FALSE;
 			}
 		}

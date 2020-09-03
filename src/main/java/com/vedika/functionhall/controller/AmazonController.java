@@ -34,7 +34,7 @@ public class AmazonController {
 
 	@RequestMapping(value = "/image/", method = RequestMethod.POST)
 
-	public ResponseEntity<GenericResponse<Response>> image(@RequestParam(value = "file") MultipartFile file,
+	public ResponseEntity<GenericResponse<Response>> image(@RequestParam(value = "file") MultipartFile[] file,
 			String correlationid) throws IOException {
 
 		HttpClient httpclient = new DefaultHttpClient();
@@ -46,7 +46,7 @@ public class AmazonController {
 
 		String imageUrl = amazonClient.uploadFile(file, correlationid);
 
-		ownerService.update(correlationid, imageUrl);
+		
 		GenericResponse<Response> responsedata = new GenericResponse<Response>();
 		responsedata.setData(response);
 

@@ -73,7 +73,23 @@ public class OwnerController {
 						response.setCorrelationid(functionHall.getCorrelationid());
 						response.setFunctionhallContactNumber(functionHall.getFunctionhallContactNumber());
 						response.setOwnerContactNumber(owner.getOwnerContactNumber());
-
+						
+						response.setAirconditioning(functionHall.getAirconditioning());
+						response.setBanquethall(functionHall.getBanquethall());
+						response.setDancefloor(functionHall.getDancefloor());
+						response.setEventspace(functionHall.getEventspace());
+						response.setInternet(functionHall.getInternet());
+						response.setLightingsystem(functionHall.getLightingsystem());
+						response.setNightclub(functionHall.getNightclub());
+						response.setNoalcohol(functionHall.getNoalcohol());
+						response.setNosmoking(functionHall.getNosmoking());
+						response.setPartyroom(functionHall.getPartyroom());
+						response.setParking(functionHall.getParking());
+						response.setSoundsystem(functionHall.getSoundsystem());
+						response.setWeddinghall(functionHall.getWeddinghall());
+						response.setConference(functionHall.getConference());
+						response.setPerformance(functionHall.getPerformance());
+						
 						functionhallsUI.add(response);
 					}
 				}
@@ -103,7 +119,7 @@ public class OwnerController {
 				if (null != funtionhalls && !funtionhalls.isEmpty()) {
 
 					for (FunctionHall functionHall : funtionhalls) {
-
+           
 						FunctionHallUIResponse response = new FunctionHallUIResponse();
 						response.setName(functionHall.getName());
 						response.setOwnerFirstName(owner.getFirstName());
@@ -121,7 +137,6 @@ public class OwnerController {
 						response.setCorrelationid(functionHall.getCorrelationid());
 						response.setFunctionhallContactNumber(functionHall.getFunctionhallContactNumber());
 						response.setOwnerContactNumber(owner.getOwnerContactNumber());
-
 						functionhallsUI.add(response);
 					}
 				}

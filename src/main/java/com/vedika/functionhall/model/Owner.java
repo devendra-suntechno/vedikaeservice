@@ -23,7 +23,7 @@ public class Owner {
 	/* db ref */
 
 	private List<FunctionHall> functionhall;
-
+    
 	private List<AccountDetails> accountdetails;
 
 	public List<AccountDetails> getAccountdetails() {

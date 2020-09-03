@@ -20,4 +20,5 @@ public interface BankRespository extends MongoRepository<Bank, String> {
 
 	List<Bank> findAll();
 
+	
 }

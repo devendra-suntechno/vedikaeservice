@@ -1,5 +1,6 @@
 package com.vedika.functionhall.controller;
 
+import java.util.Date;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.vedika.functionhall.model.ResponseObject;
 import com.vedika.functionhall.service.OwnerService;
 import com.vedika.functionhall.service.SecurityServcie;
+import com.vedika.functionhall.tokenservice.JwtTokenUtil;
 
 @RestController
 @RequestMapping("/api")
+
 public class SecurityController {
 	@Autowired
 	private SecurityServcie securityservice;
@@ -41,6 +44,8 @@ public class SecurityController {
 		if (isValid)
 			return new ResponseEntity<>("otp verified successfully", HttpStatus.OK);
 
-		return new ResponseEntity<>("otp is not verified", HttpStatus.FORBIDDEN);
+			return new ResponseEntity<>("otp is not verified", HttpStatus.FORBIDDEN);
+
+	
 	}
 }
