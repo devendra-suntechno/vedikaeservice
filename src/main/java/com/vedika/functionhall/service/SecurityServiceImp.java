@@ -7,10 +7,10 @@ import org.springframework.stereotype.Service;
 
 import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;
-import com.vedika.functionhall.config.TwilioConfiguration;
+
 import com.vedika.functionhall.model.Owner;
 import com.vedika.functionhall.repository.OwnerRepository;
-
+/*
 @Service("twilio")
 public class SecurityServiceImp implements SecurityServcie {
 	private final TwilioConfiguration twilioConfiguration;
@@ -36,4 +36,4 @@ public class SecurityServiceImp implements SecurityServcie {
 		return ownerRepository.sendOTP(mobileNumber);
 	}
 
-}
+}*/

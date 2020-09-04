@@ -17,12 +17,11 @@ import com.vedika.functionhall.service.OwnerService;
 import com.vedika.functionhall.service.SecurityServcie;
 import com.vedika.functionhall.tokenservice.JwtTokenUtil;
 
-@RestController
-@RequestMapping("/api")
-
+//@RestController
+//@RequestMapping("/api")
+/*
 public class SecurityController {
-	@Autowired
-	private SecurityServcie securityservice;
+	
 
 	@RequestMapping(value = "/user/verification", method = RequestMethod.POST)
 	public ResponseEntity<ResponseObject> sendOTP(@RequestParam String mobileNumber,
@@ -48,4 +47,4 @@ public class SecurityController {
 
 	
 	}
-}
+}*/

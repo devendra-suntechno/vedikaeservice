@@ -1,7 +1,6 @@
 package com.vedika.functionhall.service;
 
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -15,12 +14,8 @@ import org.springframework.stereotype.Service;
 
 import com.mongodb.MongoException;
 import com.mongodb.client.result.UpdateResult;
-import com.twilio.rest.api.v2010.account.Message;
-import com.twilio.type.PhoneNumber;
-import com.vedika.functionhall.config.TwilioConfiguration;
 import com.vedika.functionhall.model.Owner;
 import com.vedika.functionhall.repository.OwnerRepository;
-import com.vedika.functionhall.service.OwnerService;
 
 @Service
 public class OwnerServiceImpl implements OwnerService {

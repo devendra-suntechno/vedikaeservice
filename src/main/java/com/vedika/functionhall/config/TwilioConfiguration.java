@@ -2,7 +2,7 @@ package com.vedika.functionhall.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
-
+/*
 @Configuration
 @ConfigurationProperties("twilio")
 public class TwilioConfiguration {
@@ -39,3 +39,4 @@ public class TwilioConfiguration {
 		this.trialNumber = trialNumber;
 	}
 }
+*/

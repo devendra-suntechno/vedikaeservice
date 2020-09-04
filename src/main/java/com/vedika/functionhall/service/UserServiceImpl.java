@@ -1,5 +1,7 @@
 package com.vedika.functionhall.service;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +11,11 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import com.mongodb.MongoWriteException;
+import com.twilio.rest.api.v2010.account.Message;
+import com.twilio.type.PhoneNumber;
 import com.vedika.functionhall.model.ResponseObject;
 import com.vedika.functionhall.model.User;
+import com.vedika.functionhall.model.UserLogin;
 import com.vedika.functionhall.repository.UserRepository;
 
 @Service
@@ -20,8 +25,8 @@ public class UserServiceImpl implements UserService {
 	private UserRepository userRepository;
 	@Autowired
 	private MongoTemplate mongoTemplate;
-	@Autowired
-	private SecurityServcie securityservice;
+	// @Autowired
+	// private SecurityServcie securityservice;
 
 	@Override
 	public User register(User user) {
@@ -56,26 +61,4 @@ public class UserServiceImpl implements UserService {
 
 	}
 
-	@Override
-	public String findUserByMobilenumbers(String mobileNumber) {
-		String message = "your not  registered with us please register";
-		String message1 = "OTP SENT Successfully";
-		if (mobileNumber != null) {
-			try {
-				Query query = new Query();
-				query.addCriteria(Criteria.where("mobileNumber").is(mobileNumber));
-				User userdata = mongoTemplate.findOne(query, User.class);
-				System.out.println(userdata);
-				if (userdata.getMobileNumber().equals(mobileNumber)) {
-					String twoFaCode = String.valueOf(new Random().nextInt(9999) + 1000);
-					securityservice.send2FaCode(mobileNumber, twoFaCode);
-					return message1;
-				}
-			} catch (NullPointerException e) {
-				System.out.print("NullPointerException Caught");
-			}
-		}
-
-		return message;
-	}
 }
