@@ -8,7 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 public class Payment {
 
-	private String functionhallId;
+	
 
 	private String id;
 	private String email;
@@ -71,14 +71,6 @@ public class Payment {
 	private String mihpayId;
 
 	private PaymentMode mode;
-
-	public String getFunctionhallId() {
-		return functionhallId;
-	}
-
-	public void setFunctionhallId(String functionhallId) {
-		this.functionhallId = functionhallId;
-	}
 
 	public String getId() {
 		return id;
@@ -162,10 +154,10 @@ public class Payment {
 
 	@Override
 	public String toString() {
-		return "Payment [functionhallId=" + functionhallId + ", id=" + id + ", email=" + email + ", name=" + name
-				+ ", phone=" + phone + ", productInfo=" + productInfo + ", amount=" + amount + ", paymentStatus="
-				+ paymentStatus + ", paymentDate=" + paymentDate + ", txnId=" + txnId + ", mihpayId=" + mihpayId
-				+ ", mode=" + mode + "]";
+		return "Payment [id=" + id + ", email=" + email + ", name=" + name + ", phone=" + phone + ", productInfo="
+				+ productInfo + ", amount=" + amount + ", hash=" + hash + ", sUrl=" + sUrl + ", fUrl=" + fUrl + ", key="
+				+ key + ", paymentStatus=" + paymentStatus + ", paymentDate=" + paymentDate + ", txnId=" + txnId
+				+ ", mihpayId=" + mihpayId + ", mode=" + mode + "]";
 	}
 
 	public String getAmount() {

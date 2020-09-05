@@ -12,6 +12,6 @@ public interface PaymentService {
 
 	Payment proceedPayment(Payment paymentDetail);
 
-	String payuCallback(PaymentInfo paymentinfo, BookingSlot bookingslot);
+	PaymentInfo payuCallback(PaymentInfo paymentinfo, BookingSlot bookingslot);
 
 }

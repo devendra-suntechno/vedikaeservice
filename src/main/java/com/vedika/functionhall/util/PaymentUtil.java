@@ -13,9 +13,9 @@ public class PaymentUtil {
 
 	private static final String paymentSalt = "eCwWELxi";
 
-	private static final String sUrl = "http://localhost:8083/payment/payment-response";
+	private static final String sUrl = "http://localhost:8083/api/payment/payment-response";
 
-	private static final String fUrl = "http://localhost:8083/payment/payment-response";
+	private static final String fUrl = "http://localhost:8083/api/payment/payment-response";
 
 	public static Payment populatePaymentDetail(Payment paymentDetail) {
 		Payment payment=new Payment();
@@ -38,7 +38,6 @@ public class PaymentUtil {
 		hashString = hashString.replace("email", paymentDetail.getEmail());
 
 		hash = hashCal("SHA-512", hashString);
-		payment.setFunctionhallId(paymentDetail.getFunctionhallId());
 		paymentDetail.setHash(hash);
 		paymentDetail.setfUrl(fUrl);
 		paymentDetail.setsUrl(sUrl);

@@ -32,8 +32,9 @@ public class PaymentController {
 		return paymentService.proceedPayment(paymentDetail);
 	}
 
-	@RequestMapping(path = "/payment-response", method = RequestMethod.POST)
-	public @ResponseBody String payuCallback(@RequestBody PaymentInfo paymentinfo, BookingSlot bookingslot) {
+	@RequestMapping(path = "payment/payment-response", method = RequestMethod.POST)
+	@PostMapping("/payment-response")
+	public @ResponseBody PaymentInfo payuCallback(PaymentInfo  paymentinfo, BookingSlot bookingslot) {
 		return paymentService.payuCallback(paymentinfo, bookingslot);
 	}
 

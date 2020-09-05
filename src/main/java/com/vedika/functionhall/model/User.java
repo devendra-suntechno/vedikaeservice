@@ -18,7 +18,6 @@ public class User {
 	private String lastName;
 	@NotNull
 	private String mobileNumber;
-	
 	private String email;
 	private String address;
 	public String getUserId() {

@@ -1,7 +1,7 @@
 package com.vedika.functionhall.model;
 
 public class PaymentInfo {
-	private String functionhallId;
+	
 	private String date;
 	public String getDate() {
 		return date;
@@ -20,13 +20,16 @@ public class PaymentInfo {
 	private String status;
 	private PaymentMode mode;
 	private String txnid;
+
+	public String getProductinfo() {
+		return productinfo;
+	}
+	public void setProductinfo(String productinfo) {
+		this.productinfo = productinfo;
+	}
+	private String productinfo;
 	private String hash;
-	public String getFunctionhallId() {
-		return functionhallId;
-	}
-	public void setFunctionhallId(String functionhallId) {
-		this.functionhallId = functionhallId;
-	}
+
 	public String getMihpayid() {
 		return mihpayid;
 	}
@@ -61,9 +64,8 @@ public class PaymentInfo {
 	}
 	@Override
 	public String toString() {
-		return "PaymentInfo [functionhallId=" + functionhallId + ", date=" + date + ", timeSlot=" + timeSlot
-				+ ", mihpayid=" + mihpayid + ", status=" + status + ", mode=" + mode + ", txnid=" + txnid + ", hash="
-				+ hash + "]";
+		return "PaymentInfo [date=" + date + ", timeSlot=" + timeSlot + ", mihpayid=" + mihpayid + ", status=" + status
+				+ ", mode=" + mode + ", txnid=" + txnid + ", hash=" + hash + "]";
 	}
 	
 	

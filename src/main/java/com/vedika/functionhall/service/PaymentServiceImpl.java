@@ -1,15 +1,12 @@
 package com.vedika.functionhall.service;
 
 import java.util.Date;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.vedika.functionhall.model.BookingSlot;
 import com.vedika.functionhall.model.Payment;
-import com.vedika.functionhall.model.PaymentCallback;
-import com.vedika.functionhall.model.PaymentDetail;
 import com.vedika.functionhall.model.PaymentInfo;
 import com.vedika.functionhall.model.PaymentStatus;
 import com.vedika.functionhall.repository.BookingRepo;
@@ -28,40 +25,54 @@ public class PaymentServiceImpl implements PaymentService {
 	public Payment proceedPayment(Payment paymentDetail) {
 		PaymentUtil paymentUtil = new PaymentUtil();
 		paymentDetail = paymentUtil.populatePaymentDetail(paymentDetail);
-			//	savePaymentDetail(paymentDetail);
+			savePaymentDetail(paymentDetail);
 		return paymentDetail;
 	}
 
 	@Override
-	public String payuCallback(PaymentInfo paymentinfo, BookingSlot bookingslot) {
-		String msg = "Transaction failed.";
+	public PaymentInfo payuCallback(PaymentInfo paymentinfo, BookingSlot bookingslot) {
+	//	String msg = "Transaction failed.";
+		String msg="something went wrong ";
 		Payment payment = paymentRepository.findByTxnId(paymentinfo.getTxnid());
 		if (payment != null) {
 			// TODO validate the hash
 			PaymentStatus paymentStatus = null;
 			if (paymentinfo.getStatus().equals("failure")) {
-				paymentStatus = PaymentStatus.Failed;
+				PaymentInfo paymentinfo1=new PaymentInfo();
+				paymentinfo1.setStatus(paymentinfo.getStatus());
+				paymentinfo1.setMihpayid(paymentinfo.getMihpayid());
+				paymentinfo1.setMode(paymentinfo.getMode());
+				paymentinfo1.setProductinfo(paymentinfo.getProductinfo());
+				return paymentinfo1;
 			} else if (paymentinfo.getStatus().equals("success")) {
+				PaymentInfo paymentinfo2=new PaymentInfo();
+				paymentinfo2.setMode(paymentinfo.getMode());
+				paymentinfo2.setProductinfo(paymentinfo.getProductinfo());
+				paymentinfo2.setStatus(paymentinfo.getStatus());
+				paymentinfo2.setMihpayid(paymentinfo.getMihpayid());
 				paymentStatus = PaymentStatus.Success;
-				msg = "Transaction success";
-				payment.setFunctionhallId(paymentinfo.getFunctionhallId());
+			//	msg = "Transaction success";
 				payment.setPaymentStatus(paymentStatus);
 				payment.setMihpayId(paymentinfo.getMihpayid());
 				payment.setMode(paymentinfo.getMode());
+				bookingslot.setFunctionhallId(paymentinfo.getProductinfo());
 				bookingslot.setDate(paymentinfo.getDate());
 				bookingslot.setTimeSlot(paymentinfo.getTimeSlot());
 				paymentRepository.save(payment);
 				bookingrepo.save(bookingslot);
+				
+				return paymentinfo2;
 			}
 
 		}
-		return msg;
+		PaymentInfo paymentinfo3=new PaymentInfo();
+		paymentinfo3.setStatus(paymentinfo.getStatus());
+		return paymentinfo3;
 	}
 
 	private void savePaymentDetail(Payment paymentDetail) {
 		Payment payment = new Payment();
 		payment.setAmount(paymentDetail.getAmount());
-		payment.setFunctionhallId(paymentDetail.getFunctionhallId());
 		payment.setEmail(paymentDetail.getEmail());
 		payment.setName(paymentDetail.getName());
 		payment.setPaymentDate(new Date());
