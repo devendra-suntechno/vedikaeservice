@@ -9,15 +9,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.vedika.functionhall.exception.OwnerControllerException;
 import com.vedika.functionhall.model.FunctionHall;
 import com.vedika.functionhall.model.FunctionHallUIResponse;
 import com.vedika.functionhall.model.GenericResponse;
 import com.vedika.functionhall.model.Owner;
+import com.vedika.functionhall.model.PublishDetails;
+import com.vedika.functionhall.model.Response;
 import com.vedika.functionhall.service.OwnerService;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -30,22 +34,27 @@ public class OwnerController {
 	@Autowired
 	private OwnerService ownerService;
 
+	final static public String gst = "18%";
+
 	@RequestMapping(value = "/functionhalls", method = RequestMethod.GET)
-	public ResponseEntity<GenericResponse<List<FunctionHallUIResponse>>> findFunctionhallByNameAndCity(
+	public GenericResponse<List<FunctionHallUIResponse>> findFunctionhallByNameAndCity(
 			@RequestParam(value = "city", required = false) String city,
 			@RequestParam(value = "name", required = false) String name,
 			@RequestParam(value = "timeslot", required = false) String timeslot,
-			@RequestParam(value = "Date", required = false) String date,
-			@RequestParam(value = "maximumguest", required = false) int maximumguest) {
+			@RequestParam(value = "Date", required = false) String date) throws OwnerControllerException {
 // ToDo: add a log statement
 //ToDo: add a request timeSlot
 		logger.info("find by name:" + name);
 		logger.info("find by city:" + city);
-		logger.info("findby maximumguest:" + maximumguest);
-
-		List<Owner> functionhallOwners = ownerService.findFunctionHallByNameAndCity(city, name, maximumguest);
+		// logger.info("findby maximumguest:" + maximumguest);
 
 		List<FunctionHallUIResponse> functionhallsUI = new ArrayList<FunctionHallUIResponse>();
+
+		List<Owner> functionhallOwners = ownerService.findFunctionHallByNameAndCity(city, name);
+
+		if (functionhallOwners.isEmpty()) {
+			throw new OwnerControllerException("functionhalls not found : " + city);
+		}
 
 		if (null != functionhallOwners && !functionhallOwners.isEmpty()) {
 			for (Owner owner : functionhallOwners) {
@@ -54,101 +63,119 @@ public class OwnerController {
 
 				if (null != funtionhalls && !funtionhalls.isEmpty()) {
 
-					for (FunctionHall functionHall : funtionhalls) {
+					for (FunctionHall functionhall : funtionhalls) {
 
 						FunctionHallUIResponse response = new FunctionHallUIResponse();
-						response.setName(functionHall.getName());
+
+						response.setGstpercentage(gst);
+						response.setGrandTotal(
+								(18 * functionhall.getFunctionhallPrice() / 100) + functionhall.getFunctionhallPrice());
+						response.setFunctionhallPrice(functionhall.getFunctionhallPrice());
+						response.setZipCode(functionhall.getZipCode());
+						response.setFunctionhallId(functionhall.getFunctionhallId());
+						response.setName(functionhall.getName());
 						response.setOwnerFirstName(owner.getFirstName());
 						response.setOwnerLastName(owner.getLastName());
 						response.setOwnerId(owner.getOwnerId());
-						response.setCity(functionHall.getCity());
-						response.setStreet(functionHall.getStreetAddress());
-						response.setFunctionhalldescription(functionHall.getFunctionhalldescription());
-						response.setFunctionhalltype(functionHall.getFunctionhalltype());
-						response.setMaximumguest(functionHall.getMaximumguest());
-						response.setFoodtype(functionHall.getFoodtype());
-						response.setRoomtype(functionHall.getRoomtype());
-						response.setState(functionHall.getState());
-						response.setImageUrl(functionHall.getImageUrl());
-						response.setCorrelationid(functionHall.getCorrelationid());
-						response.setFunctionhallContactNumber(functionHall.getFunctionhallContactNumber());
-						response.setOwnerContactNumber(owner.getOwnerContactNumber());
-						
-						response.setAirconditioning(functionHall.getAirconditioning());
-						response.setBanquethall(functionHall.getBanquethall());
-						response.setDancefloor(functionHall.getDancefloor());
-						response.setEventspace(functionHall.getEventspace());
-						response.setInternet(functionHall.getInternet());
-						response.setLightingsystem(functionHall.getLightingsystem());
-						response.setNightclub(functionHall.getNightclub());
-						response.setNoalcohol(functionHall.getNoalcohol());
-						response.setNosmoking(functionHall.getNosmoking());
-						response.setPartyroom(functionHall.getPartyroom());
-						response.setParking(functionHall.getParking());
-						response.setSoundsystem(functionHall.getSoundsystem());
-						response.setWeddinghall(functionHall.getWeddinghall());
-						response.setConference(functionHall.getConference());
-						response.setPerformance(functionHall.getPerformance());
-						
+						response.setCity(functionhall.getCity());
+						response.setStreet(functionhall.getStreetAddress());
+						response.setFunctionhalldescription(functionhall.getFunctionhalldescription());
+						response.setFunctionhalltype(functionhall.getFunctionhalltype());
+						response.setMaximumguest(functionhall.getMaximumguest());
+						response.setState(functionhall.getState());
+						response.setImageUrl(functionhall.getImageUrl());
+						response.setCorrelationid(functionhall.getCorrelationId());
+						response.setFunctionhallContactNumber(functionhall.getFunctionhallContactNumber());
+						response.setAirconditioning(functionhall.getAirconditioning());
+						response.setBanquethall(functionhall.getBanquethall());
+						response.setDancefloor(functionhall.getDancefloor());
+						response.setEventspace(functionhall.getEventspace());
+						response.setInternet(functionhall.getInternet());
+						response.setLightingsystem(functionhall.getLightingsystem());
+						response.setNightclub(functionhall.getNightclub());
+						response.setNoalcohol(functionhall.getNoalcohol());
+						response.setNosmoking(functionhall.getNosmoking());
+						response.setPartyroom(functionhall.getPartyroom());
+						response.setParking(functionhall.getParking());
+						response.setSoundsystem(functionhall.getSoundsystem());
+						response.setWeddinghall(functionhall.getWeddinghall());
+						response.setConference(functionhall.getConference());
+						response.setPerformance(functionhall.getPerformance());
+
 						functionhallsUI.add(response);
 					}
 				}
 			}
-
 		}
 
 		GenericResponse<List<FunctionHallUIResponse>> response = new GenericResponse<List<FunctionHallUIResponse>>();
 		response.setData(functionhallsUI);
-		return new ResponseEntity<>(response, HttpStatus.OK);
+		return response;
+
 	}
-	// @RequestMapping(value="/updatefunctionhall" ,method=RequesMethod.PUT)
-	
-	@RequestMapping(value = "/owner", method = RequestMethod.GET)
+
+	@RequestMapping(value = "/deletefunctionhall", method = RequestMethod.DELETE)
+	public GenericResponse<Response> deletefunctionhall(
+			@RequestParam(value = "ownerId", required = false) String ownerId,
+			@RequestParam(value = "functionhallId", required = false) int functionhallId)
+			throws NullPointerException, OwnerControllerException {
+		String response = ownerService.deletefunctionhall(ownerId, functionhallId);
+		GenericResponse<Response> response1 = new GenericResponse<Response>();
+		response1.setMsg(response);
+		return response1;
+
+	}
+
+	@RequestMapping(value = "/updatefunctionhall", method = RequestMethod.PUT)
+	public String Updatefunctionhall(@RequestParam(value = "ownerId", required = false) String ownerId,
+			@RequestBody PublishDetails publishDetails,
+			@RequestParam(value = "functionhallId", required = false) int functionhallId) {
+
+		ownerService.updatefunctionhall(ownerId, publishDetails, functionhallId);
+
+		return ownerId;
+
+	}
+
+	@RequestMapping(value = "/ownerhalls", method = RequestMethod.GET)
 	public ResponseEntity<GenericResponse<List<FunctionHallUIResponse>>> findFunctionhallByNameAndCity(
-			@RequestParam(value = "ownerId", required = false) String _id){
-		
-		List<Owner> functionhallOwners = ownerService.findByownerID(_id);
+			@RequestParam(value = "ownerId", required = false) String ownerId) {
+
+		Owner functionhallOwners = ownerService.findByownerID(ownerId);
 
 		List<FunctionHallUIResponse> functionhallsUI = new ArrayList<FunctionHallUIResponse>();
 
-		if (null != functionhallOwners && !functionhallOwners.isEmpty()) {
-			for (Owner owner : functionhallOwners) {
+		List<FunctionHall> funtionhalls = functionhallOwners.getFunctionhall();
 
-				List<FunctionHall> funtionhalls = owner.getFunctionhall();
+		if (null != funtionhalls && !funtionhalls.isEmpty()) {
 
-				if (null != funtionhalls && !funtionhalls.isEmpty()) {
+			for (FunctionHall functionhall : funtionhalls) {
 
-					for (FunctionHall functionHall : funtionhalls) {
-           
-						FunctionHallUIResponse response = new FunctionHallUIResponse();
-						response.setName(functionHall.getName());
-						response.setOwnerFirstName(owner.getFirstName());
-						response.setOwnerLastName(owner.getLastName());
-						response.setOwnerId(owner.getOwnerId());
-						response.setCity(functionHall.getCity());
-						response.setStreet(functionHall.getStreetAddress());
-						response.setFunctionhalldescription(functionHall.getFunctionhalldescription());
-						response.setFunctionhalltype(functionHall.getFunctionhalltype());
-						response.setMaximumguest(functionHall.getMaximumguest());
-						response.setFoodtype(functionHall.getFoodtype());
-						response.setRoomtype(functionHall.getRoomtype());
-						response.setState(functionHall.getState());
-						response.setImageUrl(functionHall.getImageUrl());
-						response.setCorrelationid(functionHall.getCorrelationid());
-						response.setFunctionhallContactNumber(functionHall.getFunctionhallContactNumber());
-						response.setOwnerContactNumber(owner.getOwnerContactNumber());
-						functionhallsUI.add(response);
-					}
-				}
+				FunctionHallUIResponse response = new FunctionHallUIResponse();
+
+				response.setZipCode(functionhall.getZipCode());
+				response.setFunctionhallId(functionhall.getFunctionhallId());
+				response.setName(functionhall.getName());
+				response.setOwnerFirstName(functionhallOwners.getFirstName());
+				response.setOwnerLastName(functionhallOwners.getLastName());
+
+				response.setCity(functionhall.getCity());
+				response.setStreet(functionhall.getStreetAddress());
+				response.setFunctionhalldescription(functionhall.getFunctionhalldescription());
+				response.setFunctionhalltype(functionhall.getFunctionhalltype());
+				response.setMaximumguest(functionhall.getMaximumguest());
+				response.setState(functionhall.getState());
+				response.setImageUrl(functionhall.getImageUrl());
+
+				response.setFunctionhallContactNumber(functionhall.getFunctionhallContactNumber());
+
+				functionhallsUI.add(response);
 			}
-
 		}
 
 		GenericResponse<List<FunctionHallUIResponse>> response = new GenericResponse<List<FunctionHallUIResponse>>();
 		response.setData(functionhallsUI);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
-				
-		
-	
+
 }

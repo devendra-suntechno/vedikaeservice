@@ -2,12 +2,14 @@ package com.vedika.functionhall.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
-/*
+import org.springframework.data.mongodb.core.mapping.Document;
+
 @Configuration
 @ConfigurationProperties("twilio")
+@Document(collection = "twiliocredentails")
 public class TwilioConfiguration {
 
-	private String accountSid;
+	private String account_sid;
 	private String authToken;
 	private String trialNumber;
 
@@ -15,13 +17,16 @@ public class TwilioConfiguration {
 
 	}
 
-	public String getAccountSid() {
-		return accountSid;
+	
+	public String getAccount_sid() {
+		return account_sid;
 	}
 
-	public void setAccountSid(String accountSid) {
-		this.accountSid = accountSid;
+
+	public void setAccount_sid(String account_sid) {
+		this.account_sid = account_sid;
 	}
+
 
 	public String getAuthToken() {
 		return authToken;
@@ -39,4 +44,3 @@ public class TwilioConfiguration {
 		this.trialNumber = trialNumber;
 	}
 }
-*/

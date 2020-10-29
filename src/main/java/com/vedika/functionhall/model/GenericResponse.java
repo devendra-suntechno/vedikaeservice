@@ -6,7 +6,14 @@ public class GenericResponse<T> {
 
 	private String requestId=UUID.randomUUID().toString();
 	private T data;
+	private String msg;
 
+	public String getMsg() {
+		return msg;
+	}
+	public void setMsg(String msg) {
+		this.msg = msg;
+	}
 	public T getData() {
 		return data;
 	}
@@ -21,7 +28,7 @@ public class GenericResponse<T> {
 	}
 	@Override
 	public String toString() {
-		return "GenericResponse [requestId=" + requestId + ", data=" + data +  "]";
+		return "GenericResponse [requestId=" + requestId + ", data=" + data + ", msg=" + msg + "]";
 	}
 	
 

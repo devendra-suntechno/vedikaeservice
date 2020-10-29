@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.vedika.functionhall.exception.OwnerControllerException;
 import com.vedika.functionhall.model.GenericResponse;
 import com.vedika.functionhall.model.Owner;
 import com.vedika.functionhall.model.PublishDetails;
@@ -23,7 +24,7 @@ public class PublishController {
 
 	@PostMapping(value = "/publishListing")
 	public ResponseEntity<GenericResponse<Response>> saveOrUpdatePublishDetails(
-			@RequestBody PublishDetails publishDetails, Owner owner) {
+			@RequestBody PublishDetails publishDetails, Owner owner) throws OwnerControllerException {
 
 		publishService.saveOrUpdatepublishListing(publishDetails, owner);
 		Response response = new Response();

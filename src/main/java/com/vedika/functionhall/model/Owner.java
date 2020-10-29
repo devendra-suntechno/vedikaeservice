@@ -8,10 +8,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "functionhall_reference_data")
 public class Owner {
-	@Id
+	
 	private String ownerId;
-	private String corelationId;
-	private String name;
 	private String firstName;
 	private String lastName;
 	private String functionhallname;
@@ -34,14 +32,6 @@ public class Owner {
 		this.accountdetails = accountdetails;
 	}
 
-	public String getCorelationId() {
-		return corelationId;
-	}
-
-	public void setCorelationId(String corelationId) {
-		this.corelationId = corelationId;
-	}
-
 	public String getOwnerId() {
 		return ownerId;
 	}
@@ -50,13 +40,6 @@ public class Owner {
 		this.ownerId = ownerId;
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
 
 	public String getFirstName() {
 		return firstName;
@@ -124,7 +107,7 @@ public class Owner {
 
 	@Override
 	public String toString() {
-		return "Owner [ownerId=" + ownerId + ", corelationId=" + corelationId + ", name=" + name + ", firstName="
+		return "Owner [ownerId=" + ownerId + ", firstName="
 				+ firstName + ", lastName=" + lastName + ", functionhallname=" + functionhallname + ", city=" + city
 				+ ", state=" + state + ", zipcode=" + zipcode + ", ownerContactNumber=" + ownerContactNumber
 				+ ", functionhall=" + functionhall + ", accountdetails=" + accountdetails + "]";

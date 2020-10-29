@@ -8,45 +8,41 @@ public class JwtResponse implements Serializable {
 	private static final long serialVersionUID = -8091879091924046844L;
 
 	private String msg;
-	private String firstName;
-
-	private final String jwttoken;
-	private final String Expirationtime;
-
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
+	private String firstname;
+	private  String jwttoken;
+	private  String expirationtime;
 	public String getMsg() {
 		return msg;
 	}
-
+	@Override
+	public String toString() {
+		return "JwtResponse [msg=" + msg + ", firstname=" + firstname + ", jwttoken=" + jwttoken + ", expirationtime="
+				+ expirationtime + "]";
+	}
 	public void setMsg(String msg) {
 		this.msg = msg;
 	}
-
-	public JwtResponse(String jwttoken, String strDate, String firstName, String msg) {
-
-		this.Expirationtime = strDate;
-		this.jwttoken = jwttoken;
-		this.firstName = firstName;
-		this.msg = msg;
+	public String getFirstname() {
+		return firstname;
 	}
-
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
+	}
+	public String getJwttoken() {
+		return jwttoken;
+	}
+	public void setJwttoken(String jwttoken) {
+		this.jwttoken = jwttoken;
+	}
+	public String getExpirationtime() {
+		return expirationtime;
+	}
+	public void setExpirationtime(String expirationtime) {
+		this.expirationtime = expirationtime;
+	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
 
-	public String getJwttoken() {
-		return jwttoken;
-	}
-
-	public String getExpirationtime() {
-		return Expirationtime;
-	}
-
+	
 }

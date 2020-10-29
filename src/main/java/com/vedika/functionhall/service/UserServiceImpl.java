@@ -1,9 +1,5 @@
 package com.vedika.functionhall.service;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -11,11 +7,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import com.mongodb.MongoWriteException;
-import com.twilio.rest.api.v2010.account.Message;
-import com.twilio.type.PhoneNumber;
-import com.vedika.functionhall.model.ResponseObject;
 import com.vedika.functionhall.model.User;
-import com.vedika.functionhall.model.UserLogin;
 import com.vedika.functionhall.repository.UserRepository;
 
 @Service
@@ -25,8 +17,6 @@ public class UserServiceImpl implements UserService {
 	private UserRepository userRepository;
 	@Autowired
 	private MongoTemplate mongoTemplate;
-	// @Autowired
-	// private SecurityServcie securityservice;
 
 	@Override
 	public User register(User user) {
@@ -37,17 +27,19 @@ public class UserServiceImpl implements UserService {
 	public String findUserByMobilenumber(User user) throws MongoWriteException {
 
 		String msg = "user already register";
-		String msg2 = "registrationsuccess";
+		String msg1 = "Something went wrong";
+		String msg2 = "registration Success";
 		try {
 			if (user != null) {
 				Query query = new Query();
-				query.addCriteria(Criteria.where("mobileNumber").is(user.getMobileNumber()));
+				query.addCriteria(Criteria.where("userId").is(user.getUserId()));
 				User userdata = mongoTemplate.findOne(query, User.class);
 				System.out.println(userdata);
+				if (userdata != null) {
+					if (user.getUserId().equals(userdata.getUserId())) {
 
-				if (user.getMobileNumber().equals(userdata.getMobileNumber())) {
-
-					return msg;
+						return msg;
+					}
 				}
 			}
 		} catch (NullPointerException e) {
@@ -55,9 +47,41 @@ public class UserServiceImpl implements UserService {
 		} catch (MongoWriteException ex) {
 			System.out.println("Entered values is already Exits in database" + ex);
 		}
-		userRepository.save(user);
+		User result = userRepository.save(user);
 
-		return msg2;
+		if (result != null)
+			return msg2;
+		else
+			return msg1;
+
+	}
+
+	@Override
+	public String finByUser(String userId) {
+		// TODO Auto-generated method stub
+
+		String msg1 = "userId is not Available";
+		String msg2 = "UserId is Availble";
+		String msg = "something went worng";
+		try {
+
+			Query query = new Query();
+			query.addCriteria(Criteria.where("userId").is(userId));
+			User userdata = mongoTemplate.findOne(query, User.class);
+			System.out.println(userdata);
+			if (userdata != null) {
+				if (userId.equals(userdata.getUserId()))
+
+					return msg1;
+
+			} else {
+				return msg2;
+			}
+
+		} catch (NullPointerException e) {
+			System.out.print("NullPointerException Caught");
+		}
+		return msg;
 
 	}
 

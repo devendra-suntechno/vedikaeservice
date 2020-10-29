@@ -6,8 +6,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.vedika.functionhall.exception.OwnerControllerException;
 import com.vedika.functionhall.model.AccountDetails;
 import com.vedika.functionhall.model.FunctionHall;
+import com.vedika.functionhall.model.Location;
 import com.vedika.functionhall.model.Owner;
 import com.vedika.functionhall.model.PublishDetails;
 import com.vedika.functionhall.repository.PublishRepo;
@@ -19,10 +21,21 @@ public class PublishServiceImpl implements PublishService {
 
 	@Override
 	public Owner saveOrUpdatepublishListing(PublishDetails publishdetails, Owner owner)
-			throws IllegalArgumentException {
-
+			throws OwnerControllerException{
+try {
+	if(publishdetails==null) {
+		throw new OwnerControllerException("owner should not null");
+	}
+	if(publishdetails.getLocation()==null&&publishdetails.getAccountDetails()==null) {
+		throw new OwnerControllerException("owner should not null");
+			
+	}
+	if(publishdetails.getCorelationId().isEmpty()&&publishdetails.getCorelationId().equals(null)) {
+		throw new OwnerControllerException("corelationid should not null");	
+	}
+	
 		owner.setOwnerId(publishdetails.getOwnerId());
-		com.vedika.functionhall.model.Location location = publishdetails.getLocation();
+		Location location = publishdetails.getLocation();
 		FunctionHall functionhalldata = publishdetails.getDetails();
 		AccountDetails accountdetails = publishdetails.getAccountDetails();
 		List<FunctionHall> functionhalllist = new ArrayList<FunctionHall>();
@@ -33,17 +46,13 @@ public class PublishServiceImpl implements PublishService {
 			AccountDetails accountdata = new AccountDetails();
 			functionhall.setCity(location.getCity());
 			functionhall.setState(location.getState());
-			functionhall.setStreetAddress(location.getStreetAddress());
-			functionhall.setZipCode(location.getZipCode());
+			functionhall.setStreetAddress(location.getStreetaddress());
+			functionhall.setZipCode(location.getZipcode());
 			functionhall.setCountry(location.getCountry());
 			functionhall.setName(functionhalldata.getName());
 			functionhall.setFunctionhalldescription(functionhalldata.getFunctionhalldescription());
-			functionhall.setFoodtype(functionhalldata.getFoodtype());
-			functionhall.setRoomtype(functionhalldata.getRoomtype());
-			functionhall.setRoomtype(functionhalldata.getRoomtype());
 			functionhall.setMaximumguest(functionhalldata.getMaximumguest());
 			functionhall.setImageUrl(functionhalldata.getImageUrl());
-
 			functionhall.setAirconditioning(functionhalldata.getAirconditioning());
 			functionhall.setDancefloor(functionhalldata.getDancefloor());
 			functionhall.setLightingsystem(functionhalldata.getLightingsystem());
@@ -52,7 +61,6 @@ public class PublishServiceImpl implements PublishService {
 			functionhall.setNosmoking(functionhalldata.getNosmoking());
 			functionhall.setParking(functionhalldata.getParking());
 			functionhall.setSoundsystem(functionhalldata.getSoundsystem());
-
 			functionhall.setEventspace(functionhalldata.getEventspace());
 			functionhall.setWeddinghall(functionhalldata.getWeddinghall());
 			functionhall.setNightclub(functionhalldata.getNightclub());
@@ -60,20 +68,28 @@ public class PublishServiceImpl implements PublishService {
 			functionhall.setConference(functionhalldata.getConference());
 			functionhall.setPartyroom(functionhalldata.getPartyroom());
 			functionhall.setBanquethall(functionhalldata.getBanquethall());
-
-			accountdata.setAccountName(accountdetails.getAccountName());
-			accountdata.setAccountNumber(accountdetails.getAccountNumber());
-			accountdata.setAccountType(accountdetails.getAccountType());
-			accountdata.setBankName(accountdetails.getBankName());
+			accountdata.setAccountname(accountdetails.getAccountname());
+			accountdata.setAccountnumber(accountdetails.getAccountname());
+			accountdata.setAccounttype(accountdetails.getAccounttype());
+			accountdata.setBankname(accountdetails.getBankname());
 			accountdata.setBranch(accountdetails.getBranch());
 			accountdata.setIfsc(accountdetails.getIfsc());
-			accountdata.setPanNumber(accountdetails.getPanNumber());
+			accountdata.setPannumber(accountdetails.getPannumber());
 			functionhalllist.add(functionhall);
 			accountdetailslist.add(accountdata);
 		}
+
 		owner.setFunctionhall(functionhalllist);
 		owner.setAccountdetails(accountdetailslist);
-		return publishRepo.save(owner);
+		
+}
+catch(Exception ex) {
+	throw new OwnerControllerException("owner details should not empty");
+}
+publishRepo.save(owner);
+
+		return owner;
+
 	}
 
 	/*

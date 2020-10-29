@@ -10,8 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,10 +19,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;
+import com.vedika.functionhall.model.GenericResponse;
 import com.vedika.functionhall.model.JwtResponse;
+import com.vedika.functionhall.model.Response;
+import com.vedika.functionhall.model.TwilioCreden;
 import com.vedika.functionhall.model.User;
 import com.vedika.functionhall.model.UserLogin;
-import com.vedika.functionhall.service.UserService;
 import com.vedika.functionhall.tokenservice.JwtTokenUtil;
 
 @RestController
@@ -34,23 +34,25 @@ public class LoginController {
 	private JwtTokenUtil jwtTokenUtil;
 
 	@Autowired
-	private UserService userservice;
-	@Autowired
 	private MongoTemplate mongoTemplate;
 
-	private final static String ACCOUNT_SID = "AC03f7dc93379ddde947b1fd4cc5eb8f36";
-	private final static String AUTH_ID = "ff0c6bce7e7f0c88a85fb3cb9df21ebc";
-	static {
-		Twilio.init(ACCOUNT_SID, AUTH_ID);
-	}
 	HashMap<String, UserLogin> otpdata = new HashMap<>();
 
 	@RequestMapping(value = "/login/verification", method = RequestMethod.POST)
-	public String sendOTP(@RequestParam String mobileNumber) throws NullPointerException {
-
+	public GenericResponse<Response> sendOTP(@RequestParam String mobileNumber)
+			throws NullPointerException, IllegalArgumentException {
+		GenericResponse<Response> response = new GenericResponse<Response>();
+		Query query1 = new Query();
+		query1.addCriteria(Criteria.where("_id").is("5f64dbaed9d8b8b70f05c8aa"));
+		TwilioCreden userdata1 = mongoTemplate.findOne(query1, TwilioCreden.class);
+		System.out.println(userdata1);
+		Twilio.init(userdata1.getAccount_sid(), userdata1.getAuthToken());
 		String message = "your not  registered with us please register";
 		String message1 = "OTP SENT Successfully";
+		if (mobileNumber == null || mobileNumber.isEmpty()) {
 
+			throw new IllegalArgumentException("mobileNumber should not be Null");
+		}
 		if (mobileNumber != null) {
 			try {
 				Query query = new Query();
@@ -66,54 +68,72 @@ public class LoginController {
 					userlogin.setFirstName(userdata.getFirstName());
 
 					otpdata.put(mobileNumber, userlogin);
-					Message.creator(new PhoneNumber(mobileNumber), new PhoneNumber("+18647148412"),
+					Message.creator(new PhoneNumber("+91" + mobileNumber), new PhoneNumber("+18647148412"),
 							"Your vedika Login Authentication code is: " + userlogin.getOtp()).create();
-
-					return message1;
+					response.setMsg(message1);
+					return response;
 				}
 			} catch (NullPointerException e) {
 				System.out.print("NullPointerException Caught");
 			}
-		}
 
-		return message;
+		}
+		response.setMsg(message);
+		return response;
 
 	}
 
 	@RequestMapping(value = "login/verification", method = RequestMethod.PUT)
-	public ResponseEntity<Object> verifyotp(@RequestBody UserLogin user, @RequestParam String mobileNumber) {
+	public GenericResponse<JwtResponse> verifyotp(@RequestBody UserLogin user) {
+
+		GenericResponse<JwtResponse> response = new GenericResponse<JwtResponse>();
+
+		String msg = "Please Provide Otp";
+		String msg1 = "Invalid OTP";
+		String msg2 = "OTP has Expired";
+		String msg3 = "Something went wrong Please Try again";
 
 		if (user.getOtp() == null || user.getOtp().trim().length() <= 0) {
 
-			return new ResponseEntity<>("please provide Otp", HttpStatus.BAD_REQUEST);
+			response.setMsg(msg);
+
+			return response;
+
 		}
 
-		UserLogin userdata = otpdata.get(mobileNumber);
+		UserLogin userdata = otpdata.get(user.getMobileNumber());
 		if (userdata != null) {
 			if (userdata.getExpiretime() >= System.currentTimeMillis()) {
 
 				if (userdata.getOtp().equals(user.getOtp())) {
-					String msg="OTP Verified successfully";
-					otpdata.remove(mobileNumber);
-					final String token = jwtTokenUtil.generateToken(mobileNumber);
+					String msg4 = "OTP Verified successfully";
+					otpdata.remove(user.getMobileNumber());
+					String token = jwtTokenUtil.generateToken(user.getMobileNumber());
 					final Date expirationtime = jwtTokenUtil.getExpirationDateFromToken(token);
-					DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+					final DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
 					String strDate = dateFormat.format(expirationtime);
-					String firstName=userdata.getFirstName();
-					JwtResponse res = new JwtResponse(token, strDate, firstName,msg);
-					res.setFirstName(userdata.getFirstName());
-					res.getExpirationtime();
-					res.setMsg(msg);
-					return ResponseEntity.ok(new JwtResponse(token, strDate, firstName, msg));
+					String firstName = userdata.getFirstName();
+
+					JwtResponse res = new JwtResponse();
+					GenericResponse<JwtResponse> response1 = new GenericResponse<JwtResponse>();
+					res.setJwttoken(token);
+
+					res.setFirstname(firstName);
+					res.setExpirationtime(strDate);
+					res.setMsg(msg4);
+					response1.setData(res);
+					return response1;
 
 				}
-
-				return new ResponseEntity<>("Invalid OTP", HttpStatus.BAD_REQUEST);
+				response.setMsg(msg1);
+				return response;
 
 			}
-			return new ResponseEntity<>("OTP has Expired", HttpStatus.BAD_REQUEST);
+			response.setMsg(msg2);
+			return response;
 		}
-		return new ResponseEntity<>("Something went wrong", HttpStatus.BAD_REQUEST);
+		response.setMsg(msg3);
+		return response;
 
 	}
 

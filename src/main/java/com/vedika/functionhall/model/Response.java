@@ -1,6 +1,11 @@
 package com.vedika.functionhall.model;
 
 public class Response {
+	@Override
+	public String toString() {
+		return "Response [msg=" + msg + "]";
+	}
+
 	private String msg;
 
 	public String getMsg() {

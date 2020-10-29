@@ -17,22 +17,20 @@ import org.springframework.web.multipart.MultipartFile;
 import com.vedika.functionhall.model.GenericResponse;
 import com.vedika.functionhall.model.Response;
 import com.vedika.functionhall.service.AmazonClient;
-import com.vedika.functionhall.service.OwnerService;
 
 @RestController
 @RequestMapping("/api")
 public class AmazonController {
 
 	private AmazonClient amazonClient;
-	@Autowired
-	private OwnerService ownerService;
+	
 
 	@Autowired
 	AmazonController(AmazonClient amazonClient) {
 		this.amazonClient = amazonClient;
 	}
 
-	@RequestMapping(value = "/image/", method = RequestMethod.POST)
+	@RequestMapping(value = "/image",  headers = "content-type=multipart/form-data",method = RequestMethod.POST)
 
 	public ResponseEntity<GenericResponse<Response>> image(@RequestParam(value = "file") MultipartFile[] file,
 			String correlationid) throws IOException {

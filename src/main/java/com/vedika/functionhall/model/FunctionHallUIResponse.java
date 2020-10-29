@@ -8,9 +8,32 @@ public class FunctionHallUIResponse {
 	private String ownerFirstName;
 	private String ownerLastName;
 	private String ownerId;
+	private int functionhallId; 
+	private int grandTotal;
+	
+
+	
+
+	public int getGrandTotal() {
+		return grandTotal;
+	}
+
+	public void setGrandTotal(int grandTotal) {
+		this.grandTotal = grandTotal;
+	}
+
+	public int getFunctionhallId() {
+		return functionhallId;
+	}
+
+	public void setFunctionhallId(int functionhallId) {
+		this.functionhallId = functionhallId;
+	}
+
 	private String functionhalldescription;
 	private String functionhalltype;
-	private String foodtype;
+	private int functionhallPrice;
+	private String gstpercentage;
 	private int maximumguest;
 	private String roomtype;
 	private String ownerContactNumber;
@@ -32,6 +55,27 @@ public class FunctionHallUIResponse {
 	private Boolean weddinghall;
 	private Boolean nightclub;
 	private Boolean eventspace;
+	private String city;
+	private String zipCode;
+
+
+	public String getZipCode() {
+		return zipCode;
+	}
+
+	public void setZipCode(String zipCode) {
+		this.zipCode = zipCode;
+	}
+
+	private String functionhallContactNumber;
+
+	public String getFunctionhalldescription() {
+		return functionhalldescription;
+	}
+
+	public void setFunctionhalldescription(String functionhalldescription) {
+		this.functionhalldescription = functionhalldescription;
+	}
 
 	private String correlationid;
 
@@ -45,6 +89,28 @@ public class FunctionHallUIResponse {
 
 	public Boolean getPartyroom() {
 		return partyroom;
+	}
+
+	
+
+	
+
+
+
+	public int getFunctionhallPrice() {
+		return functionhallPrice;
+	}
+
+	public void setFunctionhallPrice(int functionhallPrice) {
+		this.functionhallPrice = functionhallPrice;
+	}
+
+	public String getGstpercentage() {
+		return gstpercentage;
+	}
+
+	public void setGstpercentage(String gstpercentage) {
+		this.gstpercentage = gstpercentage;
 	}
 
 	public void setPartyroom(Boolean partyroom) {
@@ -160,13 +226,6 @@ public class FunctionHallUIResponse {
 		this.noalcohol = noalcohol;
 	}
 
-	public String getFunctionhalldescription() {
-		return functionhalldescription;
-	}
-
-	public void setFunctionhalldescription(String functionhalldescription) {
-		this.functionhalldescription = functionhalldescription;
-	}
 
 	public String getFunctionhalltype() {
 		return functionhalltype;
@@ -176,13 +235,7 @@ public class FunctionHallUIResponse {
 		this.functionhalltype = functionhalltype;
 	}
 
-	public String getFoodtype() {
-		return foodtype;
-	}
 
-	public void setFoodtype(String foodtype) {
-		this.foodtype = foodtype;
-	}
 
 	public int getMaximumguest() {
 		return maximumguest;
@@ -208,9 +261,7 @@ public class FunctionHallUIResponse {
 		this.correlationid = correlationid;
 	}
 
-	private String city;
-	private int zipcode;
-	private String functionhallContactNumber;
+	
 
 	public String getOwnerContactNumber() {
 		return ownerContactNumber;
@@ -284,13 +335,6 @@ public class FunctionHallUIResponse {
 		this.city = city;
 	}
 
-	public int getZipcode() {
-		return zipcode;
-	}
-
-	public void setZipcode(int zipcode) {
-		this.zipcode = zipcode;
-	}
 
 	public String[] getImageUrl() {
 		return ImageUrl;
@@ -303,16 +347,19 @@ public class FunctionHallUIResponse {
 	@Override
 	public String toString() {
 		return "FunctionHallUIResponse [name=" + name + ", ownerFirstName=" + ownerFirstName + ", ownerLastName="
-				+ ownerLastName + ", ownerId=" + ownerId + ", functionhalldescription=" + functionhalldescription
-				+ ", functionhalltype=" + functionhalltype + ", foodtype=" + foodtype + ", maximumguest=" + maximumguest
-				+ ", roomtype=" + roomtype + ", ownerContactNumber=" + ownerContactNumber + ", ImageUrl="
-				+ Arrays.toString(ImageUrl) + ", street=" + street + ", state=" + state + ", parking=" + parking
-				+ ", internet=" + internet + ", nosmoking=" + nosmoking + ", airconditioning=" + airconditioning
-				+ ", soundsystem=" + soundsystem + ", lightingsystem=" + lightingsystem + ", dancefloor=" + dancefloor
-				+ ", noalcohol=" + noalcohol + ", banquethall=" + banquethall + ", partyroom=" + partyroom
-				+ ", conference=" + conference + ", performance=" + performance + ", weddinghall=" + weddinghall + ", nightclub="
-				+ nightclub + ",eventspace=" + eventspace + ", correlationid=" + correlationid + ", city=" + city
-				+ ", zipcode=" + zipcode + ", functionhallContactNumber=" + functionhallContactNumber + "]";
+				+ ownerLastName + ", ownerId=" + ownerId + ", functionhallId=" + functionhallId + ", grandTotal="
+				+ grandTotal + ", functionhalldescription=" + functionhalldescription + ", functionhalltype="
+				+ functionhalltype + ", functionhallPrice=" + functionhallPrice + ", gstpercentage=" + gstpercentage
+				+ ", maximumguest=" + maximumguest + ", roomtype=" + roomtype + ", ownerContactNumber="
+				+ ownerContactNumber + ", ImageUrl=" + Arrays.toString(ImageUrl) + ", street=" + street + ", state="
+				+ state + ", parking=" + parking + ", internet=" + internet + ", nosmoking=" + nosmoking
+				+ ", airconditioning=" + airconditioning + ", soundsystem=" + soundsystem + ", lightingsystem="
+				+ lightingsystem + ", dancefloor=" + dancefloor + ", noalcohol=" + noalcohol + ", banquethall="
+				+ banquethall + ", partyroom=" + partyroom + ", conference=" + conference + ", performance="
+				+ performance + ", weddinghall=" + weddinghall + ", nightclub=" + nightclub + ", eventspace="
+				+ eventspace + ", city=" + city + ", zipCode=" + zipCode + ", functionhallContactNumber="
+				+ functionhallContactNumber + ", correlationid=" + correlationid + "]";
 	}
+
 
 }

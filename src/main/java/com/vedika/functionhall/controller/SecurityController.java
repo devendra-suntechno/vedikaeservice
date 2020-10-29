@@ -1,6 +1,5 @@
 package com.vedika.functionhall.controller;
 
-import java.util.Date;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,15 +12,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.vedika.functionhall.model.ResponseObject;
-import com.vedika.functionhall.service.OwnerService;
 import com.vedika.functionhall.service.SecurityServcie;
-import com.vedika.functionhall.tokenservice.JwtTokenUtil;
 
-//@RestController
-//@RequestMapping("/api")
-/*
+
+
+@RestController
+@RequestMapping("/api")
+
 public class SecurityController {
-	
+	@Autowired
+	SecurityServcie securityservice;
 
 	@RequestMapping(value = "/user/verification", method = RequestMethod.POST)
 	public ResponseEntity<ResponseObject> sendOTP(@RequestParam String mobileNumber,
@@ -47,4 +47,4 @@ public class SecurityController {
 
 	
 	}
-}*/
+}

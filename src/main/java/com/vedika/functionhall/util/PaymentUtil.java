@@ -5,7 +5,6 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Random;
 
 import com.vedika.functionhall.model.Payment;
-import com.vedika.functionhall.model.PaymentDetail;
 
 public class PaymentUtil {
 
@@ -18,7 +17,7 @@ public class PaymentUtil {
 	private static final String fUrl = "http://localhost:8083/api/payment/payment-response";
 
 	public static Payment populatePaymentDetail(Payment paymentDetail) {
-		Payment payment=new Payment();
+	
 		String hashString = "";
 		Random rand = new Random();
 		String randomId = Integer.toString(rand.nextInt()) + (System.currentTimeMillis() / 1000L);

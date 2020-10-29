@@ -1,8 +1,5 @@
 package com.vedika.functionhall.model;
 
-import org.springframework.data.mongodb.core.mapping.Document;
-
-
 public class PaymentDetail {
 
     private String email;
